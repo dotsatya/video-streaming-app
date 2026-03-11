@@ -150,6 +150,7 @@ const SignUpPage = () => {
             </Button>
             <CardAction>
               <Button
+                type="button"
                 variant="link"
                 className="w-full mt-4"
                 onClick={() => router.push("/login")}
