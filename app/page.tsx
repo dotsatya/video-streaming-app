@@ -52,10 +52,7 @@ export default function HomePage() {
           <h2 className="text-2xl font-semibold tracking-tight mb-8">
             Check out our dashboard page for more features
           </h2>
-          <Link
-            href="/dashboard"
-            className="flex items-center justify-center"
-          >
+          <Link href="/dashboard" className="flex items-center justify-center">
             <button className="flex items-center gap-3 bg-white text-black border border-zinc-300 px-8 py-3 rounded-full font-medium hover:bg-zinc-50 transition-all shadow-sm cursor-pointer">
               /Dashboard page
             </button>

@@ -39,7 +39,7 @@ const data = {
 
   navMain: [
     {
-      title: "All Videos",
+      title: "Home",
       url: "/dashboard",
       icon: <TerminalSquareIcon />,
       isActive: true,
