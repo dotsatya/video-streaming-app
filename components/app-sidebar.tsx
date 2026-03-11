@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from "@/components/nav-main";
+import { NavProjects } from "@/components/nav-projects";
+import { NavUser } from "@/components/nav-user";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -13,207 +13,111 @@ import {
   SidebarHeader,
   SidebarMenuButton,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { GalleryVerticalEndIcon, AudioLinesIcon, TerminalIcon, TerminalSquareIcon, BotIcon, BookOpenIcon, Settings2Icon, FrameIcon, PieChartIcon, MapIcon, ListVideo } from "lucide-react"
+} from "@/components/ui/sidebar";
+import {
+  GalleryVerticalEndIcon,
+  AudioLinesIcon,
+  TerminalIcon,
+  TerminalSquareIcon,
+  BotIcon,
+  BookOpenIcon,
+  Settings2Icon,
+  FrameIcon,
+  PieChartIcon,
+  MapIcon,
+  ListVideo,
+} from "lucide-react";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 // This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "https://github.com/shadcn.png",
-  },
-
   app: {
     name: "Dot Streaming",
-    logo: (
-      <ListVideo />
-    ),
+    logo: <ListVideo />,
   },
 
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: (
-        <TerminalSquareIcon
-        />
-      ),
+      title: "All Videos",
+      url: "/dashboard",
+      icon: <TerminalSquareIcon />,
       isActive: true,
-      items: [
-        {
-          title: "All Videos",
-          url: "/dashboard/showvideos",
-        },
-        {
-          title: "Upload",
-          url: "/dashboard/upload",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      items: [],
     },
     // {
-    //   title: "Models",
-    //   url: "#",
-    //   icon: (
-    //     <BotIcon
-    //     />
-    //   ),
+    //   title: "Documentation",
+    //   url: "/dashboard/documentation",
+    //   icon: <BookOpenIcon />,
     //   items: [
     //     {
-    //       title: "Genesis",
-    //       url: "#",
+    //       title: "Introduction",
+    //       url: "/dashboard/documentation#introduction",
     //     },
     //     {
-    //       title: "Explorer",
-    //       url: "#",
+    //       title: "Get Started",
+    //       url: "/dashboard/documentation#get-started",
     //     },
     //     {
-    //       title: "Quantum",
-    //       url: "#",
+    //       title: "Tutorials",
+    //       url: "/dashboard/documentation#tutorials",
+    //     },
+    //     {
+    //       title: "Api Reference",
+    //       url: "/dashboard/documentation#api-reference",
+    //     },
+    //     {
+    //       title: "Changelog",
+    //       url: "/dashboard/documentation#changelog",
     //     },
     //   ],
     // },
     {
-      title: "Documentation",
-      url: "#",
-      icon: (
-        <BookOpenIcon
-        />
-      ),
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
+      title: "Upload here",
+      url: "/dashboard/upload",
+      icon: <TerminalSquareIcon />,
+      isActive: true,
+      items: [],
     },
-    // {
-    //   title: "Settings",
-    //   url: "#",
-    //   icon: (
-    //     <Settings2Icon
-    //     />
-    //   ),
-    //   items: [
-    //     {
-    //       title: "General",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Team",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Billing",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Limits",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
   ],
-
-  // teams: [
-  //   {
-  //     name: "Dot Streaming",
-  //     logo: (
-  //       <GalleryVerticalEndIcon
-  //       />
-  //     ),
-  //     plan: "Enterprise",
-  //   },
-  //   {
-  //     name: "Acme Corp.",
-  //     logo: (
-  //       <AudioLinesIcon
-  //       />
-  //     ),
-  //     plan: "Startup",
-  //   },
-  //   {
-  //     name: "Evil Corp.",
-  //     logo: (
-  //       <TerminalIcon
-  //       />
-  //     ),
-  //     plan: "Free",
-  //   },
-  // ],
-
-  // projects: [
-  //   {
-  //     name: "Design Engineering",
-  //     url: "#",
-  //     icon: (
-  //       <FrameIcon
-  //       />
-  //     ),
-  //   },
-  //   {
-  //     name: "Sales & Marketing",
-  //     url: "#",
-  //     icon: (
-  //       <PieChartIcon
-  //       />
-  //     ),
-  //   },
-  //   {
-  //     name: "Travel",
-  //     url: "#",
-  //     icon: (
-  //       <MapIcon
-  //       />
-  //     ),
-  //   },
-  // ],
-
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: session } = useSession();
+
+  const userData = {
+    name: session?.user?.name || "Guest",
+    email: session?.user?.email || "",
+    avatar: session?.user?.image || "",
+  };
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         {/* <TeamSwitcher teams={data.teams} /> */}
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                {data.app.logo}
-              </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{data.app.name}</span>
-                {/* <span className="truncate text-xs">{data.app.plan}</span> */}
-              </div>
-              {/* <ChevronsUpDownIcon className="ml-auto" /> */}
-            </SidebarMenuButton>
+        <SidebarMenuButton
+          size="lg"
+          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        >
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+            {data.app.logo}
+          </div>
+          <div className="grid flex-1 text-left text-sm leading-tight">
+            <span className="truncate font-medium">{data.app.name}</span>
+            {/* <span className="truncate text-xs">{data.app.plan}</span> */}
+          </div>
+          {/* <ChevronsUpDownIcon className="ml-auto" /> */}
+        </SidebarMenuButton>
       </SidebarHeader>
+
       <SidebarContent>
         <NavMain items={data.navMain} />
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={userData} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

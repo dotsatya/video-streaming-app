@@ -14,8 +14,6 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
-
-
 type IKUploadResponse = Awaited<ReturnType<typeof upload>>;
 
 interface FileUploadProps {

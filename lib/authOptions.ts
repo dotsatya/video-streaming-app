@@ -15,9 +15,9 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         image: {
-            label: "Image",
-            type: "text",
-            placeholder: "Enter your image",
+          label: "Image",
+          type: "text",
+          placeholder: "Enter your image",
         },
         name: {
           label: "Name",
@@ -91,15 +91,20 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
 
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
+      // Initial sign in
       if (user) {
         token.id = user.id;
+        token.name = user.name;
+        token.image = user.image;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.name = token.name as string;
+        session.user.image = token.image as string;
       }
       return session;
     },
